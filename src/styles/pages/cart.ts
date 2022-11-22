@@ -8,6 +8,9 @@ export const CartContainer = styled('div', {
   height: '100vh',
   zIndex: 100,
 
+  transform: 'translateX(0%)',
+  transition: 'all 0.2s ease-in-out',
+
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
@@ -111,6 +114,46 @@ export const FooterContainer = styled('footer', {
     fontSize: '1.125rem',
     lineHeight: 1.6,
     borderRadius: 8,
+    cursor: 'pointer',
+
+    '&:disabled': {
+      opacity: 0.6,
+      cursor: 'not-allowed',
+    },
+
+    '&:not(:disabled):hover': {
+      backgroundColor: '$green300',
+    },
+  },
+})
+
+export const EmptyCart = styled('div', {
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginTop: '50%',
+
+  h6: {
+    color: '$gray100',
+    fontWeight: 'bold',
+    lineHeight: 1.6,
+    fontSize: '1.25rem',
+    marginBottom: '2rem',
+  },
+
+  button: {
+    marginTop: '1rem',
+    padding: '0.75rem',
+    backgroundColor: '$green500',
+    color: '$gray100',
+    fontWeight: 'bold',
+    fontSize: '0.825rem',
+    lineHeight: 1.6,
+    borderRadius: 8,
+    cursor: 'pointer',
 
     '&:disabled': {
       opacity: 0.6,
