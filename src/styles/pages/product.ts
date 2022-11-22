@@ -1,32 +1,31 @@
-import { styled } from "..";
+import { styled } from '..'
 
 export const ProductContainer = styled('main', {
-  display: "grid",
+  display: 'grid',
   gridTemplateColumns: '1fr 1fr',
-  alignItems: "stretch",
+  alignItems: 'stretch',
   gap: '4rem',
 
-
-  maxWidth: '1180px',
+  maxWidth: '1320px',
   margin: '0 auto',
-});
+})
 
 export const ImageContainer = styled('div', {
-  width:' 100%',
+  width: ' 100%',
   maxWidth: 576,
   height: 656,
   background: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
   borderRadius: 8,
   padding: '0.25rem',
 
-  display: "flex",
+  display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
 
   img: {
     objectFit: 'cover',
-  }
-});
+  },
+})
 
 export const ProductDetails = styled('div', {
   display: 'flex',
@@ -71,5 +70,4 @@ export const ProductDetails = styled('div', {
       backgroundColor: '$green300',
     },
   },
-
-});
+})

@@ -2,39 +2,44 @@ import axios from 'axios'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import {useRouter} from 'next/router'
-import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useContext, useState } from 'react'
 import Stripe from 'stripe'
+import { ShopContext } from '../../context/ShopContext'
 import { stripe } from '../../lib/stripe'
-import { ImageContainer, ProductContainer, ProductDetails } from '../../styles/pages/product'
+import {
+  ImageContainer,
+  ProductContainer,
+  ProductDetails,
+} from '../../styles/pages/product'
 
 interface ProductProps {
   product: {
-    id: string;
-    name: string;
-    imageUrl: string;
-    price: string;
-    description: string;
-    defaultPriceId: string;
+    id: string
+    name: string
+    imageUrl: string
+    price: string
+    description: string
+    defaultPriceId: string
+    value: number
   }
 }
 
-export default function Product({product}: ProductProps) {
+export default function Product({ product }: ProductProps) {
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
+    useState(false)
+  const { addNewItemOnCart } = useContext(ShopContext)
 
-  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
-
-  async function handleBuyProduct(){
+  async function handleBuyProduct() {
     try {
-
       setIsCreatingCheckoutSession(true)
       const response = await axios.post('/api/checkout', {
         priceId: product.defaultPriceId,
       })
 
-      const {checkoutUrl} = response.data;
+      const { checkoutUrl } = response.data
 
       window.location.href = checkoutUrl
-
     } catch (err) {
       // Conectar com uma ferramenta de observalidade (Datadog / Sentry)
 
@@ -44,46 +49,51 @@ export default function Product({product}: ProductProps) {
     }
   }
 
+  function handleAddNewItemOnCart() {
+    addNewItemOnCart(product)
+    console.log('ENCVIANDO', product)
+  }
+
   return (
     <>
       <Head>
         <title>{product.name} | Ignite Shop</title>
-
-
       </Head>
       <ProductContainer>
         <ImageContainer>
-          <Image src={product.imageUrl} width={520} height={480} alt='' />
+          <Image src={product.imageUrl} width={520} height={480} alt="" />
         </ImageContainer>
         <ProductDetails>
           <h1>{product.name}</h1>
           <span>{product.price}</span>
           <p>{product.description}</p>
 
-          <button disabled={isCreatingCheckoutSession} onClick={handleBuyProduct}>Comprar agora</button>
+          <button
+            disabled={isCreatingCheckoutSession}
+            onClick={handleAddNewItemOnCart}
+          >
+            Colocar na sacola
+          </button>
         </ProductDetails>
       </ProductContainer>
     </>
   )
 }
 
-
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
-    paths: [
-      { params: { id: 'prod_MpKrEcfKficEaJ' } }
-    ],
+    paths: [{ params: { id: 'prod_MpKrEcfKficEaJ' } }],
     fallback: 'blocking',
   }
-};
+}
 
-
-export const getStaticProps: GetStaticProps<any, {id: string}> = async ({params}) => {
-
-  const productId= params?.id;
+export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
+  params,
+}) => {
+  const productId = params?.id
 
   const product = await stripe.products.retrieve(String(productId), {
-    expand: ['default_price']
+    expand: ['default_price'],
   })
 
   const price = product.default_price as Stripe.Price
@@ -100,7 +110,8 @@ export const getStaticProps: GetStaticProps<any, {id: string}> = async ({params}
         }).format(Number(price.unit_amount) / 100),
         description: product.description,
         defaultPriceId: price.id,
-      }
+        value: Number(price.unit_amount) / 100,
+      },
     },
     revalidate: 60 * 60 * 1, // 1 hour
   }
