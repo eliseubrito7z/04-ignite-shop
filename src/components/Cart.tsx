@@ -5,13 +5,11 @@ import {
   FooterContainer,
   ImageContainer,
   Items,
-  ItemsOnCartContainer,
 } from '../styles/pages/cart'
 import { X } from 'phosphor-react'
 import { useContext, useState } from 'react'
 import { ShopContext } from '../context/ShopContext'
 import axios from 'axios'
-import Stripe from 'stripe'
 import Link from 'next/link'
 
 export function Cart() {
@@ -55,7 +53,7 @@ export function Cart() {
   }
 
   return (
-    <ItemsOnCartContainer>
+    <CartContainer>
       <section>
         <header onClick={handleToggleCartState}>
           <X size={24} weight="bold" />
@@ -107,6 +105,6 @@ export function Cart() {
           </button>
         </FooterContainer>
       )}
-    </ItemsOnCartContainer>
+    </CartContainer>
   )
 }

@@ -1,13 +1,5 @@
 import { styled } from '..'
 
-export const ItemsOnCartContainer = styled('div', {
-  height: '100vh',
-
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-})
-
 export const CartContainer = styled('div', {
   position: 'absolute',
   right: 0,
@@ -15,8 +7,6 @@ export const CartContainer = styled('div', {
   width: '32rem',
   height: '100vh',
   zIndex: 100,
-  opacity: 1,
-  transition: 'all 0.2s ease-in-out',
 
   display: 'flex',
   flexDirection: 'column',

@@ -41,7 +41,7 @@ export default function Product({ product }: ProductProps) {
 
       window.location.href = checkoutUrl
     } catch (err) {
-      // Conectar com uma ferramenta de observalidade (Datadog / Sentry)
+      // Connect a tool of observance (Datadog / Sentry)
 
       setIsCreatingCheckoutSession(false)
 

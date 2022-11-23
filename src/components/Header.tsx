@@ -1,14 +1,9 @@
-import type { AppProps } from 'next/app'
 import { globalStyles } from '../styles/global'
 import logoImg from '../assets/logo.svg'
-import {
-  CartContainer,
-  Container,
-  HeaderContainer,
-} from '../styles/pages/header'
+import { Container, HeaderContainer } from '../styles/pages/header'
 import Image from 'next/image'
 import { Handbag } from 'phosphor-react'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { Cart } from '../components/Cart'
 import { ShopContext } from '../context/ShopContext'
 import Link from 'next/link'
@@ -32,11 +27,7 @@ export function Header() {
           <Handbag size={24} weight="bold" />
         </button>
       </HeaderContainer>
-      {cartOpen === true && (
-        <CartContainer>
-          <Cart />
-        </CartContainer>
-      )}
+      {cartOpen === true && <Cart />}
     </Container>
   )
 }
