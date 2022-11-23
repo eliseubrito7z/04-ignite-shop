@@ -36,13 +36,17 @@ export const SuccessContainer = styled('main', {
   },
 })
 
+export const ImagesSection = styled('div', {
+  display: 'flex',
+  gap: '1rem',
+})
+
 export const ImageContainer = styled('main', {
   width: '100%',
-  maxWidth: 130,
-  height: 145,
+  maxWidth: 140,
   background: 'linear-gradient(180deg, #1ea483 0%, #7465d4 100%)',
-  borderRadius: 8,
-  padding: '0.25rem',
+  borderRadius: '100%',
+  padding: '0.75rem',
   marginTop: '4rem',
 
   display: 'flex',

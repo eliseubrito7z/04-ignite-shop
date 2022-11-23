@@ -15,6 +15,7 @@ interface ShopContextType {
   itemsOnCart: ProductInCart[]
   toggleCartState: () => void
   addNewItemOnCart: (product: ProductInCart) => void
+  removeItemCart: (id: string) => void
 }
 
 export const ShopContext = createContext({} as ShopContextType)
@@ -32,6 +33,11 @@ export function ShopContextProvider({ children }: ShopContextProviderProps) {
   }
 
   function addNewItemOnCart(product: ProductInCart) {
+    if (itemsOnCart.length >= 5) {
+      alert('O valor maximo de produtos é 5!')
+      return
+    }
+
     const newItem = {
       id: product.id,
       name: product.name,
@@ -43,13 +49,24 @@ export function ShopContextProvider({ children }: ShopContextProviderProps) {
     }
 
     setItemsOnCart((state) => [newItem, ...state])
-    console.log('NEW ITEM', newItem)
   }
-  console.log('LIST_ITEMS', itemsOnCart)
+
+  function removeItemCart(id: string) {
+    const cartWithoutOne = itemsOnCart.filter((item) => {
+      return item.id !== id
+    })
+    setItemsOnCart(cartWithoutOne)
+  }
 
   return (
     <ShopContext.Provider
-      value={{ cartOpen, toggleCartState, addNewItemOnCart, itemsOnCart }}
+      value={{
+        cartOpen,
+        toggleCartState,
+        addNewItemOnCart,
+        itemsOnCart,
+        removeItemCart,
+      }}
     >
       {children}
     </ShopContext.Provider>

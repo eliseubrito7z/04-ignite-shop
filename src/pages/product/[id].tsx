@@ -51,7 +51,6 @@ export default function Product({ product }: ProductProps) {
 
   function handleAddNewItemOnCart() {
     addNewItemOnCart(product)
-    console.log('ENCVIANDO', product)
   }
 
   return (

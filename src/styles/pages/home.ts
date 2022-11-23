@@ -8,6 +8,7 @@ export const HomeContainer = styled('main', {
   marginLeft: 'auto',
   // margin: '0 auto',
   minHeight: 656,
+  overflow: 'hidden',
 })
 
 export const Product = styled('div', {

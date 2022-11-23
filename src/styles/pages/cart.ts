@@ -1,5 +1,13 @@
 import { styled } from '..'
 
+export const ItemsOnCartContainer = styled('div', {
+  height: '100vh',
+
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+})
+
 export const CartContainer = styled('div', {
   position: 'absolute',
   right: 0,
@@ -7,8 +15,7 @@ export const CartContainer = styled('div', {
   width: '32rem',
   height: '100vh',
   zIndex: 100,
-
-  transform: 'translateX(0%)',
+  opacity: 1,
   transition: 'all 0.2s ease-in-out',
 
   display: 'flex',
@@ -62,6 +69,18 @@ export const Items = styled('main', {
     fontWeight: 'bold',
     lineHeight: 1.6,
     fontSize: '1rem',
+  },
+
+  button: {
+    background: 'transparent',
+    color: '$green500',
+    fontWeight: 'bold',
+    lineHeight: 1.6,
+    fontSize: '1rem',
+    border: 0,
+    textAlign: 'start',
+    maxWidth: 'max-content',
+    cursor: 'pointer',
   },
 })
 

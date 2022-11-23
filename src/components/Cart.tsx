@@ -5,6 +5,7 @@ import {
   FooterContainer,
   ImageContainer,
   Items,
+  ItemsOnCartContainer,
 } from '../styles/pages/cart'
 import { X } from 'phosphor-react'
 import { useContext, useState } from 'react'
@@ -14,7 +15,8 @@ import Stripe from 'stripe'
 import Link from 'next/link'
 
 export function Cart() {
-  const { toggleCartState, itemsOnCart } = useContext(ShopContext)
+  const { toggleCartState, itemsOnCart, removeItemCart } =
+    useContext(ShopContext)
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
     useState(false)
 
@@ -27,8 +29,6 @@ export function Cart() {
     total += itemValue
     return total
   }, 0)
-
-  console.log(itemsPrices)
 
   function handleToggleCartState() {
     toggleCartState()
@@ -50,13 +50,12 @@ export function Cart() {
       // Conectar com uma ferramenta de observalidade (Datadog / Sentry)
 
       setIsCreatingCheckoutSession(false)
-      console.log(err)
       alert('Falha ao redirecionar ao checkout')
     }
   }
 
   return (
-    <CartContainer>
+    <ItemsOnCartContainer>
       <section>
         <header onClick={handleToggleCartState}>
           <X size={24} weight="bold" />
@@ -64,6 +63,10 @@ export function Cart() {
         <h3>Sacola de compras</h3>
         {itemsOnCart.length > 0 ? (
           itemsOnCart.map((item) => {
+            function handleRemoveItem() {
+              removeItemCart(item.id)
+            }
+
             return (
               <Items key={item.id}>
                 <ImageContainer>
@@ -72,7 +75,7 @@ export function Cart() {
                 <div>
                   <h4>{item.name}</h4>
                   <span>{item.price}</span>
-                  <strong>Remover</strong>
+                  <button onClick={handleRemoveItem}>Remover</button>
                 </div>
               </Items>
             )
@@ -104,6 +107,6 @@ export function Cart() {
           </button>
         </FooterContainer>
       )}
-    </CartContainer>
+    </ItemsOnCartContainer>
   )
 }
